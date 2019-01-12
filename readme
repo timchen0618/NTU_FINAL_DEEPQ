@@ -1,0 +1,12 @@
+使用的套件：
+1.pytorch
+2.numpy、pandas
+3.torchvision
+4.PIL
+5.sklearn
+
+執行testing：
+bash fianl_test.sh [input_file] [output_file] [root_dir_of_image]
+(e.g. bash final_test.sh ./test.csv ./result.csv ./ntu_final/images)
+
+另外，會需要用到final/result裡面的7個model(路徑是寫死在./result/mdoel_name)，可能需要cd進檔案夾做reproduce。
