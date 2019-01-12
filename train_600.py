@@ -85,7 +85,7 @@ def train(convnet, optimizer, training_batch, labels):
     return loss
 
 
-def trainIters(partition, labels, params, max_epochs, convnet, transform):
+def trainIters(partition, labels, params, max_epochs, convnet, transform, root_dir):
 
     summary(convnet, (3, 800,800))
 
@@ -100,10 +100,10 @@ def trainIters(partition, labels, params, max_epochs, convnet, transform):
             transforms.Normalize(torch.tensor(mean), torch.tensor(std))
         ])
 
-    training_set = Dataset(partition['train'], labels, transform)
+    training_set = Dataset(partition['train'], labels, transform, root_dir)
     training_generator = data.DataLoader(training_set, **params)
 
-    validation_set = Dataset(partition['validation'], labels, valid_transform)
+    validation_set = Dataset(partition['validation'], labels, valid_transform, root_dir)
     validation_generator = data.DataLoader(validation_set, **params)
 
 
@@ -151,6 +151,7 @@ if __name__ == '__main__':
     max_epochs = 100
 
     file_name = sys.argv[1]
+    root_dir = sys.argv[2]
     X, Y = read_data(file_name)
 
     labels, partition = genLabels_Partition(X, Y)
@@ -160,6 +161,8 @@ if __name__ == '__main__':
     print(len(labels))
     print(len(partition['train']))
 
+    mean=[0.485, 0.456, 0.406]
+    std=[0.229, 0.224, 0.225]
     #transform of training data
     transform = transforms.Compose([
         #transforms.Grayscale(3),
@@ -172,8 +175,8 @@ if __name__ == '__main__':
 
     #model 
     #We use different drop out rate in different models, refer to readme.md for reference.
-    linear_drop = sys.argv[3]
-    dropout = sys.argv[2]
+    linear_drop = float(sys.argv[4])
+    dropout = float(sys.argv[3])
     if use_cuda:
         convnet = ConvNet2(num_classes =14, dropout = dropout, linear_drop = linear_drop).cuda()
     else:
@@ -183,4 +186,7 @@ if __name__ == '__main__':
         labels = labels,
         params = params, 
         max_epochs = max_epochs,
-        convnet = convnet)
+        convnet = convnet,
+        transform = transform,
+        root_dir = root_dir
+        )

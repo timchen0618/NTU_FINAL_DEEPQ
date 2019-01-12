@@ -231,6 +231,7 @@ class ConvNet2(nn.Module):
             nn.Linear(1000, num_classes),
             nn.Dropout(linear_drop)
             )
+        print(linear_drop)
 
     def forward(self, x):
         out = self.densenet(x)

@@ -6,11 +6,11 @@ import torchvision.transforms as transforms
 
 class Dataset(data.Dataset):
   #'Characterizes a dataset for PyTorch'
-  def __init__(self, list_IDs, labels, transform):
+  def __init__(self, list_IDs, labels, transform, root_dir):
         #'Initialization'
         self.labels = labels
         self.list_IDs = list_IDs
-        self.root_dir = "./images/"
+        self.root_dir = root_dir
         self.transform = transform
 
   def __len__(self):
