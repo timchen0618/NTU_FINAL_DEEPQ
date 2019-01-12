@@ -29,8 +29,8 @@ python3 train_600.py [input_file] [root_dir] [dropout] [lineardrop]
 訓練之後我們根據validation score，將表現通過一定標準的model存在./result資料夾內，供之後testing使用。
 
 執行testing：(one_model)
-python3 evaluate_600.py [input_file] [model_file] [output_file] 
-(e.g python3 evaluate_600.py ./test.csv ./train_best.model ./result.csv)
+python3 evaluate_600.py [input_file] [model_file] [root_dir_of_image] [output_file] 
+(e.g python3 evaluate_600.py ./test.csv ./train_best.model ./image.csv ./result.csv)
 輸出即為單一model所產生的testing結果。
 
 執行testing：(ensemble)
