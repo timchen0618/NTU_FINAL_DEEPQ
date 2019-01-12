@@ -224,12 +224,12 @@ def densenet161(pretrained=False, **kwargs):
 
 
 class ConvNet2(nn.Module):
-    def __init__(self, num_classes = 14, dropout = 0):
+    def __init__(self, num_classes = 14, dropout = 0, linear_drop = 0.2):
         super(ConvNet2, self).__init__()
         self.densenet = densenet121(pretrained = True, drop_rate = dropout)
         self.linear = nn.Sequential(
             nn.Linear(1000, num_classes),
-            nn.Dropout(0.2)
+            nn.Dropout(linear_drop)
             )
 
     def forward(self, x):
@@ -253,19 +253,6 @@ class ConvNet3(nn.Module):
         
         return out    
     
-# class FeatNet(nn.Module):
-#     def __init__(self, densenet = densenet121(pretrained = True), num_classes = 4):
-#         super(FeatNet, self).__init__()
-#         self.densenet = densenet
-#         self.linear1 = nn.Linear(1000, 256)
-#         self.linear2 = nn.Linear(256, num_classes)
-
-#     def forward(self, x):
-#         out = self.densenet(x)
-#         out = F.relu(self.linear1(out))
-#         out = self.linear2(out)
-        
-#         return out
 
 class FeatNet(nn.Module):
     r"""Densenet-BC model class, based on

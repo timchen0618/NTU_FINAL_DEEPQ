@@ -123,10 +123,6 @@ def read_data_rotate(file_name):
 	train_X = data[:,0]
 	train_Y = torch.from_numpy(Y)
 	
-#     for i in range(train_X.shape[0]):
-#         train_X[i] = (train_X[i], Y[i])
-#     train_X = np.asarray(train_X)
-
 	return train_X, train_Y 
 
 

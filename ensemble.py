@@ -80,19 +80,16 @@ params = {'batch_size': 32,
         'num_workers': 8}
 print(len(partition))
 labels = np.zeros(len(partition))
-#mean_var = np.load("mean_var.npy")
-#mean, std = [mean_var[0], mean_var[0], mean_var[0]], [mean_var[1], mean_var[1], mean_var[1]]
+
 mean=[0.485, 0.456, 0.406]
 std=[0.229, 0.224, 0.225]
 transform = transforms.Compose([
-    #transforms.Grayscale(3),
     transforms.Resize(256),
     transforms.CenterCrop(224),
     transforms.ToTensor(),
     transforms.Normalize(torch.tensor(mean), torch.tensor(std))])
 
 transform_600 = transforms.Compose([
-    #transforms.Grayscale(3),
     transforms.Resize(685),
     transforms.CenterCrop(600),
     transforms.ToTensor(),
