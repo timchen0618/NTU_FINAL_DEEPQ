@@ -33,7 +33,7 @@ def test(model, device, test_loader, PATH):
     return result
 
 
-def write_result(result, idx, ile_name):
+def write_result(result, idx, file_name):
     idx = pd.DataFrame(idx, columns = ["Id"])
     result = pd.DataFrame(result, columns = ["Atelectasis","Cardiomegaly" ,"Effusion" ,"Infiltration" ,"Mass" ,"Nodule" ,"Pneumonia" ,"Pneumothorax" ,"Consolidation" ,"Edema" ,"Emphysema" ,"Fibrosis" ,"Pleural_Thickening" , "Hernia"])
     frames = [idx, result]
@@ -76,5 +76,5 @@ result = test(
     PATH = path
     )
 print("----testing completed----")
-outfile = sys.argv[3]
+outfile = sys.argv[4]
 write_result(result, X, outfile)
