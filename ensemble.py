@@ -42,7 +42,7 @@ def read_data(file_name):
     result = np.load(file_name)
     return result
 
-def write_result(result, idx, ile_name):
+def write_result(result, idx, file_name):
     idx = pd.DataFrame(idx, columns = ["Id"])
     result = pd.DataFrame(result, columns = ["Atelectasis","Cardiomegaly" ,"Effusion" ,"Infiltration" ,"Mass" ,"Nodule" ,"Pneumonia" ,"Pneumothorax" ,"Consolidation" ,"Edema" ,"Emphysema" ,"Fibrosis" ,"Pleural_Thickening" , "Hernia"])
     frames = [idx, result]
@@ -70,9 +70,16 @@ def read_data_1(file_name):
 
 
 
-sys.argv[3]
-
 file_name = sys.argv[1]
+outfile = sys.argv[2]
+root_dir = sys.argv[3]
+if file_name[-1] == '\r' or file_name[-1] == '\n':
+    file_name = file_name[:-1]
+if outfile[-1] == '\r' or outfile[-1] == '\n':
+    outfile = outfile[:-1]
+if root_dir[-1] == '\r' or root_dir[-1] == '\n':
+    root_dir = root_dir[:-1]
+
 X = read_test(file_name)
 partition = genTest(X)
 params = {'batch_size': 32,
@@ -98,7 +105,7 @@ transform_600 = transforms.Compose([
 # testing_set = Dataset(partition['train'], labels, transform)
 # testing_generator = data.DataLoader(testing_set, **params)
 
-testing_set_600 = Dataset(partition['train'], labels, transform_600, sys.argv[3])
+testing_set_600 = Dataset(partition['train'], labels, transform_600, root_dir)
 testing_generator_600 = data.DataLoader(testing_set_600, **params)
 
 models = []
@@ -208,5 +215,5 @@ weights = np.asarray([1.8, 1.8, 1.4, 1, 0, 1, 0.1])
 res = avg_results(results, weights)
 
 print("----testing completed----")
-outfile = sys.argv[2]
+
 write_result(res, X, outfile)
