@@ -1,28 +1,30 @@
 # Medical Image Classification - Disease Detection
 
 ## Package Used：
-1.pytorch
-2.numpy、pandas
-3.torchvision
-4.PIL
-5.sklearn
-6.torchsummary
+1. PyTorch
+2. numpy, pandas
+3. torchvision
+4. PIL
+5. sklearn
+6. torchsummary
 
 ## Reproduction
 <p> We use multiple models to form one ensemble model. They mainly differ in validation data, dropout adn linear_drop. 
-All models other than model_4 and model_5 are validated on the first 1/10 portion of data.
-Different learning rates and optimizers are also used. </p>
+All models other than model_4 and model_5 are validated on the first 1/10 portion of data. Parameters of all models are listed below.</p>
+To reproduce the training result, we have to modify the script a little bit because the partition of training and validation set are determined in the python scripts. 
+If we need to adjust the partition, we have to modify the numbers `in genLabels_Partition` in `load.py`. Or, you can run `shuffle.py` to make the results more random.
 
-若要reproduce training結果，我們是使用多個model ensemble的結果，其中有變動的參數包刮dropout、linear_drop、以及validation set的不同(讓機器可以看到不同的training data)。我們除了model4跟model5，都是取整個dataset最前面的1/10做validation，而model4是取第二個1/10，model5是取第三個1/10。因為validation set的調整是寫死在讀檔的python script裡面的，如果要調整的話可能就要去load.py的genLabels_Partition調整裡面的數字。或者，如果再跑一次shuffle.py也可以讓結果更random。
+<p> 若要reproduce training結果，我們是使用多個model ensemble的結果，其中有變動的參數包刮dropout、linear_drop、以及validation set的不同(讓機器可以看到不同的training data)。我們除了model4跟model5，都是取整個dataset最前面的1/10做validation，而model4是取第二個1/10，model5是取第三個1/10。因為validation set的調整是寫死在讀檔的python script裡面的，如果要調整的話可能就要去load.py的genLabels_Partition調整裡面的數字。或者，如果再跑一次shuffle.py也可以讓結果更random。 </p>
 
+The parameters of all seven models:
 共有7個model，其參數分別如下：
-Model_1: dropout = 0.4, linear_drop = 0.2
-Model_2: dropout = 0.2, linear_drop = 0.2
-Model_3: dropout = 0.5 linear_drop = 0.2
-Model_4: dropout = 0.5 linear_drop = 0.2  #validation data => 0.2-0.3
-Model_5: dropout = 0.5 linear_drop = 0.2  #validation data =>0.3-0.4
-Model_6: dropout = 0.5 linear_drop = 0.4
-Model_7: dropout = 0 linear_drop = 0
+- Model_1: `dropout = 0.4, linear_drop = 0.2`
+- Model_2: `dropout = 0.2, linear_drop = 0.2`
+- Model_3: `dropout = 0.5, linear_drop = 0.2`
+- Model_4: `dropout = 0.5, linear_drop = 0.2  #validation data => 0.2-0.3`
+- Model_5: `dropout = 0.5, linear_drop = 0.2  #validation data =>0.3-0.4`
+- Model_6: `dropout = 0.5, linear_drop = 0.4`
+- Model_7: `dropout = 0, linear_drop = 0`
 
 在執行training之前，需要先執行shuffle.py，我們會將data打散，以免validation set都取到差不多的image。指令如下：
 python3 shuffle.py [input_name] (e.g. -python3 shuffle.py ./train.csv)
