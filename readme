@@ -1,6 +1,6 @@
-Medical Image Classification - Disease Detection
+# Medical Image Classification - Disease Detection
 
-使用的套件：
+## Package Used：
 1.pytorch
 2.numpy、pandas
 3.torchvision
@@ -8,11 +8,16 @@ Medical Image Classification - Disease Detection
 5.sklearn
 6.torchsummary
 
+## Reproduction
+<p> We use multiple models to form one ensemble model. They mainly differ in validation data, dropout adn linear_drop. 
+All models other than model_4 and model_5 are validated on the first 1/10 portion of data.
+Different learning rates and optimizers are also used. </p>
+
 若要reproduce training結果，我們是使用多個model ensemble的結果，其中有變動的參數包刮dropout、linear_drop、以及validation set的不同(讓機器可以看到不同的training data)。我們除了model4跟model5，都是取整個dataset最前面的1/10做validation，而model4是取第二個1/10，model5是取第三個1/10。因為validation set的調整是寫死在讀檔的python script裡面的，如果要調整的話可能就要去load.py的genLabels_Partition調整裡面的數字。或者，如果再跑一次shuffle.py也可以讓結果更random。
 
 共有7個model，其參數分別如下：
-Model_1: dropout = 0.4 linear_drop = 0.2
-Model_2: dropout = 0.2 linear_drop = 0.2
+Model_1: dropout = 0.4, linear_drop = 0.2
+Model_2: dropout = 0.2, linear_drop = 0.2
 Model_3: dropout = 0.5 linear_drop = 0.2
 Model_4: dropout = 0.5 linear_drop = 0.2  #validation data => 0.2-0.3
 Model_5: dropout = 0.5 linear_drop = 0.2  #validation data =>0.3-0.4
@@ -24,7 +29,7 @@ python3 shuffle.py [input_name] (e.g. -python3 shuffle.py ./train.csv)
 輸出會叫做label_only.csv，之後會當成training的輸入。
 
 執行Training：
-python3 train_600.py [input_file] [root_dir] [dropout] [lineardrop] 
+`python3 train_600.py [input_file] [root_dir] [dropout] [lineardrop] `
 (input_file代表前面經過shuffle.py產生的檔案，應為label_only.csv，root_dir代表的是圖片所在的位置，dropout跟lineardrop是可以調的參數。dropout代表denseblock的dropout rate，linear_drop代表linear classifier的dropout rate。
 範例輸入：python3 train_600.py ./label_only.csv ./images 0.5 0.2 )
 
